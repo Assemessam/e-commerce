@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Merchant;
+use App\Models\Product;
 use App\Models\Store;
 use App\Models\VatPercentage;
 use App\Models\VatValue;
@@ -45,5 +46,14 @@ class StoreController extends Controller
                 $vat_value->save();
             }
         }
+    }
+
+    public function addProduct(Store $store,Request $request){
+        $product = new Product();
+        $product->name = $request->name;
+        $product->description = $request->description;
+        $product->price = $request->price;
+        $product->store_id = $store->id;
+        $product->save();
     }
 }

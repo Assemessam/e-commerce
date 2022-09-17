@@ -21,6 +21,7 @@ Route::post('/merchant/create',[RegisterController::class,'registerMerchant']);
 Route::post('/customer/create',[RegisterController::class,'registerCustomer']);
 Route::middleware('auth:sanctum' )->group(function () {
     Route::post('/store/{merchant}/create',[StoreController::class,'create']);
+    Route::post('/product/{store}/add',[StoreController::class,'addProduct']);
 
 });
 
