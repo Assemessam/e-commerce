@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Customer;
+use App\Models\Merchant;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -69,5 +72,24 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+    public function registerMerchant(Request $request){
+        $merchant = Merchant::create([
+            'address'=>$request->address,
+            'commercial_registration_no'=>$request->commercial_registration_no,
+            'vat_registration_no'=>$request->vat_registration_no
+        ]);
+       $user = $this->create(['name'=>$request->name,'email'=>$request->email,'password'=>$request->password]);
+        $user->profile()->associate($merchant)->save();
+    }
+
+    public function registerCustomer(Request $request){
+        $customer = Customer::create([
+            'address'=>$request->address,
+            'commercial_registration_no'=>$request->commercial_registration_no,
+            'vat_registration_no'=>$request->vat_registration_no
+        ]);
+        $user = $this->create(['name'=>$request->name,'email'=>$request->email,'password'=>$request->password]);
+        $user->profile()->associate($customer)->save();
     }
 }

@@ -21,8 +21,15 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'profile_type',
+        'profile_id'
     ];
+    protected $with = ['profile'];
 
+    public function profile()
+    {
+        return $this->morphTo();
+    }
     /**
      * The attributes that should be hidden for serialization.
      *

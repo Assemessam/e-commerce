@@ -2,6 +2,10 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\StoreController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -13,7 +17,11 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::post('/merchant/create',[RegisterController::class,'registerMerchant']);
+Route::post('/customer/create',[RegisterController::class,'registerCustomer']);
+Route::middleware('auth:sanctum' )->group(function () {
+    Route::post('/store/{merchant}/create',[StoreController::class,'create']);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
 });
+
+
