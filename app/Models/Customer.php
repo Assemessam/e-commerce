@@ -17,4 +17,7 @@ class Customer extends Model
     {
         return $this->morphOne('App\User', 'profile');
     }
+    public function carts(){
+        return $this->hasMany(Cart::class);
+    }
 }
